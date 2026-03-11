@@ -1,314 +1,568 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ---------------- GLOBAL RESET ---------------- */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
-html, body, #root {
-  height: 100%;
+html,body,#root{
+  height:100%;
 }
 
-body {
+body{
   font-family: "Segoe UI", sans-serif;
-  overflow-x: hidden;
+  background:#f4f6f9;
+  overflow-x:hidden;
 }
 
-.layout {
-  display: flex;
-  height: 100vh;
-  width: 100%;
-   background-color: #f4f6f9;
+
+/* ---------------- LAYOUT ---------------- */
+
+.layout{
+  display:flex;
+  height:100vh;
+  width:100%;
 }
 
-.sidebar {
-  width: 250px;
-  background-color: #1e293b;
-  color: white;
-  padding: 20px;
+.sidebar{
+  width:250px;
+  background:#1e293b;
+  color:white;
+  padding:25px 20px;
 }
 
-.logo {
-  margin-bottom: 30px;
-  font-size: 22px;
-  font-weight: bold;
+.logo{
+  font-size:22px;
+  font-weight:700;
+  margin-bottom:30px;
 }
 
-.sidebar ul {
-  list-style: none;
+
+/* sidebar navigation */
+
+.sidebar ul{
+  list-style:none;
 }
 
-.sidebar ul li {
-  padding: 12px 10px;
-  margin-bottom: 10px;
-  cursor: pointer;
-  border-radius: 6px;
-  transition: 0.3s;
+.sidebar li{
+  padding:12px 12px;
+  margin-bottom:8px;
+  border-radius:6px;
+  cursor:pointer;
+  transition:all .2s ease;
 }
 
-.sidebar ul li:hover {
-  background-color: #b5cbed;
-  color: black;
+.sidebar li:hover{
+  background:#b5cbed;
+  color:black;
 }
 
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+
+/* ---------------- MAIN AREA ---------------- */
+
+.main{
+  flex:1;
+  display:flex;
+  flex-direction:column;
 }
 
-.topbar {
-  height: 70px;
-  background-color: white;
-  padding: 0 25px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+.topbar{
+  height:70px;
+  background:white;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 25px;
+  box-shadow:0 2px 5px rgba(0,0,0,0.08);
 }
 
-.search-input {
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid #0f0d0d;
-  outline: none;
-  width: 500px;
+
+/* search */
+
+.search-input{
+  width:420px;
+  padding:9px 12px;
+  border-radius:6px;
+  border:1px solid #ddd;
+  outline:none;
+  transition:all .2s;
 }
 
-.search-input:focus {
-  border-color: #3b82f6;
+.search-input:focus{
+  border-color:#3b82f6;
 }
 
-.new_project {
-  height: 40px;
-  width: 150px;
-  background-color: white;
-  color: black;
-  border: 1px solid #e2e8f0;
-  border-radius: 5px;
-  cursor: pointer;
-}
+
+/* ---------------- BUTTONS ---------------- */
 
 .newproject_btn{
-  padding:20px;
+  margin-bottom:25px;
 }
 
-.dashboard-main{
-  text-align: center;
+.new_project{
+  height:40px;
+  width:150px;
+  border-radius:6px;
+  border:1px solid #e2e8f0;
+  background:white;
+  cursor:pointer;
+  transition:all .2s;
 }
 
-.login-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f4f6f9;
+.new_project:hover{
+  background:#f1f5f9;
 }
 
-.login-card {
-  width: 350px;
-  background-color: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+/* ---------------- AUTH PAGES ---------------- */
+
+.login-container,
+.signup-container{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
-.login-card h1 {
-  text-align: center;
-  margin-bottom: 25px;
-  font-weight: 600;
+.login-card,
+.signup-card{
+  width:360px;
+  background:white;
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.08);
 }
 
-.form-group {
-  margin-bottom: 18px;
-  display: flex;
-  flex-direction: column;
+.login-card h1,
+.signup-card h2{
+  text-align:center;
+  margin-bottom:25px;
+  font-weight:600;
 }
 
-.form-group label {
-  margin-bottom: 6px;
-  font-size: 14px;
+
+/* ---------------- FORM ELEMENTS ---------------- */
+
+.form-group{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:15px;
 }
 
-.form-group input {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  outline: none;
-  transition: 0.3s;
-}
-
-.form-group input:focus {
-  border-color: #3b82f6;
-}
-
-.login-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #3b82f6;
-  border: none;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.login-btn:hover {
-  background-color: #2563eb;
-}
-
-/* Center the page */
-.signup-container {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f4f6f9;
-}
-
-/* Card */
-.signup-card {
-  width: 380px;
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-/* Title */
-.signup-card h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  font-weight: 600;
-}
-
-/* Form group */
-.form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  font-size: 14px;
-  margin-bottom: 5px;
+.form-group label{
+  font-size:14px;
+  margin-bottom:5px;
 }
 
 .form-group input,
-.form-group select {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  outline: none;
-  transition: 0.3s;
+.form-group select,
+.form-group textarea{
+  padding:10px;
+  border-radius:6px;
+  border:1px solid #ddd;
+  outline:none;
+  transition:.2s;
 }
 
 .form-group input:focus,
-.form-group select:focus {
-  border-color: #3b82f6;
+.form-group select:focus,
+.form-group textarea:focus{
+  border-color:#3b82f6;
 }
 
-/* Button */
-.signup-btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #3b82f6;
-  border: none;
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: 0.3s;
-  margin-top: 10px;
+
+/* buttons */
+
+.login-btn,
+.signup-btn{
+  width:100%;
+  padding:10px;
+  border:none;
+  border-radius:6px;
+  background:#3b82f6;
+  color:white;
+  cursor:pointer;
+  margin-top:10px;
+  transition:.2s;
 }
 
-.signup-btn:hover {
-  background-color: #2563eb;
+.login-btn:hover,
+.signup-btn:hover{
+  background:#2563eb;
 }
 
-/* Page Background */
-.create-form-container {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f4f6f9;
-  padding: 20px;
+
+/* ---------------- CREATE FORMS ---------------- */
+
+.create-form-container,
+.create-task-container{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
 }
 
-/* Card Style */
-.create-form-card {
-  width: 100%;
-  max-width: 500px;
-  background: #ffffff;
+.create-form-card,
+.create-task-card{
+  width:100%;
+  max-width:520px;
+  background:white;
+  padding:30px;
+  border-radius:10px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+}
+
+.create-form-title,
+.create-task-title{
+  text-align:center;
+  margin-bottom:20px;
+  color:#333;
+}
+
+
+/* form layout */
+
+.create-form-group,
+.create-task-group{
+  display:flex;
+  flex-direction:column;
+  margin-bottom:15px;
+}
+
+.create-form-row,
+.create-task-row{
+  display:flex;
+  gap:15px;
+}
+
+.create-task-row{
+  justify-content:space-between;
+}
+
+.create-form-group textarea,
+.create-task-group textarea{
+  resize:none;
+  height:80px;
+}
+
+
+/* primary button */
+
+.create-primary-btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:6px;
+  background:#4a90e2;
+  color:white;
+  font-size:15px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.create-primary-btn:hover{
+  background:#357abd;
+}
+
+
+/* ---------------- DASHBOARD ---------------- */
+
+.dashboard-main{
+  padding:30px;
+  min-height:100vh;
+}
+
+.dashboard-main h2{
+  margin-bottom:20px;
+  color:#333;
+}
+
+
+/* dashboard cards grid */
+
+.task-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+  margin-bottom:30px;
+}
+
+
+.active-card {
+    background: linear-gradient(135deg, #ffffff, #f8f9ff);
+    border-radius: 14px;
+    padding: 22px 24px;
+    width: 220px;
+    height: 130px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.active-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+}
+
+.active-card-count {
+    font-size: 34px;
+    font-weight: 700;
+    color: #4f46e5;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.active-card-title {
+    font-size: 15px;
+    font-weight: 500;
+    color: #6b7280;
+    margin-top: 8px;
+}
+
+/* ---------------- RECENT TASKS ---------------- */
+
+.recent-container{
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.recent-title{
+  margin-bottom:15px;
+  color:#333;
+}
+
+.recent-table-wrapper{
+  overflow-x:auto;
+}
+
+.recent-table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.recent-table thead{
+  background:#f4f6f9;
+}
+
+.recent-table th{
+  text-align:left;
+  padding:12px;
+  font-weight:600;
+  color:#444;
+}
+
+.recent-table td{
+  padding:12px;
+  border-top:1px solid #eee;
+  color:#555;
+}
+
+.recent-table tbody tr:hover{
+  background:#f9fafc;
+}
+
+/* .project-card{
+  background:#fff;
+  border-radius:12px;
+  padding:18px;
+  width:300px;
+  border:1px solid #e5e7eb;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  transition:.2s;
+}
+
+.project-card:hover{
+  transform:translateY(-5px);
+}
+
+.project-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.project-title{
+  font-size:17px;
+  font-weight:600;
+}
+
+.project-status{
+  background:#ecfdf5;
+  color:#059669;
+  padding:4px 8px;
+  font-size:12px;
+  border-radius:6px;
+}
+
+.project-description{
+  font-size:14px;
+  color:#555;
+}
+
+.project-info{
+  display:flex;
+  justify-content:space-between;
+  font-size:13px;
+  color:#666;
+}
+
+.project-btn{
+  margin-top:5px;
+  padding:9px;
+  border:none;
+  border-radius:8px;
+  background:#4f46e5;
+  color:white;
+  font-size:14px;
+  cursor:pointer;
+}
+
+.project-dashboard{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:20px;
+} */
+
+/* Dashboard Container */
+.project-dashboard {
   padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f7fb;
+  min-height: 100vh;
 }
 
-/* Title */
-.create-form-title {
-  text-align: center;
+/* Heading */
+.project-dashboard h1 {
   margin-bottom: 20px;
+  font-size: 28px;
   color: #333;
 }
 
-/* Group */
-.create-form-group {
+/* Project Grid Layout */
+.project-dashboard > div:last-child {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Project Card */
+.project-card {
+  background: white;
+  border-radius: 10px;
+  padding: 18px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover Effect */
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+}
+
+/* Header */
+.project-header {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Title */
+.project-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+
+/* Status Badge */
+.project-status {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 15px;
+  background-color: #e6f4ea;
+  color: #2e7d32;
+}
+
+/* Description */
+.project-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 12px;
+}
+
+/* Info Section */
+.project-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #666;
   margin-bottom: 15px;
 }
 
-/* Row (for side-by-side inputs) */
-.create-form-row {
-  display: flex;
-  gap: 15px;
-}
-
-/* Labels */
-.create-form-group label {
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #444;
-}
-
-/* Inputs, Textarea, Select */
-.create-form-group input,
-.create-form-group textarea,
-.create-form-group select {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 14px;
-  transition: border 0.3s ease;
-}
-
-/* Focus Effect */
-.create-form-group input:focus,
-.create-form-group textarea:focus,
-.create-form-group select:focus {
-  outline: none;
-  border-color: #4a90e2;
-}
-
-/* Textarea Resize */
-.create-form-group textarea {
-  resize: none;
-  height: 80px;
-}
-
 /* Button */
-.create-primary-btn {
+.project-btn {
   width: 100%;
-  padding: 12px;
-  background-color: #4a90e2;
-  color: #fff;
+  padding: 8px;
   border: none;
   border-radius: 6px;
-  font-size: 15px;
+  background-color: #4f46e5;
+  color: white;
+  font-size: 14px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.2s ease;
 }
 
-.create-primary-btn:hover {
-  background-color: #357abd;
+.project-btn:hover {
+  background-color: #4338ca;
+}
+
+.kanban-board{
+  display: flex;
+  gap: 20px;
+  padding: 30px;
+  background-color: #f4f6fb;
+  min-height: 100vh;
+}
+
+.kanban-column{
+  flex: 1;
+  background: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  min-height: 400px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+}
+
+.kanban-column h3{
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.task-card{
+  background: #ffffff;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  cursor: grab;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: 0.2s;
+}
+
+.task-card:hover{
+  background: #f1f3ff;
 }

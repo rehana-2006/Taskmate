@@ -1,31 +1,16 @@
 import React from "react";
-import ProjectCountCard from "../components/ProjectCountCard";
 
-function Dashboard() {
+function MyTasks(){
 
-    const Task_data = [
-  { id: 1, number: 12, name: "Active Project" },
-  { id: 2, number: 8, name: "Task Assigned to me" },
-  { id: 3, number: 5, name: "Task completed" },
-  { id: 4, number: 3, name: "Task Pending" },
-];
-
-   const myCurrentTasks = [
+    const myCurrentTasks = [
         { id: 1, title: 'Database Migration', project: 'PMS System', status: 'In Progress', priority: 'High', progress: 65 },
         { id: 2, title: 'Logo Design Concepts', project: 'PM Studio Branding', status: 'Pending', priority: 'Medium', progress: 0 },
         { id: 3, title: 'API Documentation', project: 'TaskMate AI', status: 'In Progress', priority: 'Low', progress: 40 },
     ];
 
-  return (
-    <div className="dashboard-main">
-      <h2>Dashboard Overview</h2>
-      <div className="task-grid">
-        {Task_data.map((task, idx) => (
-          <ProjectCountCard key={idx} Data={task} />
-        ))}
-      </div>
-      <div className="recent-container">
-        <h2 className="recent-title">Recent tasks</h2>
+    return (
+        <div className="recent-container">
+        <h2 className="recent-title">My Tasks</h2>
         <div className="recent-table-wrapper">
           <table className="recent-table">
             <thead>
@@ -49,8 +34,7 @@ function Dashboard() {
           </table>
         </div>
       </div>
-    </div>
-  );
-}
+    )
 
-export default Dashboard;
+}
+export default MyTasks;

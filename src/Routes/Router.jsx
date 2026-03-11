@@ -1,7 +1,7 @@
-// import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
-// import MainRoutes from "./MainRoutes";
+import MainRoutes from "./MainRoutes";
 
-// const Router=createBrowserRouter([MainRoutes]);
+const Router=createBrowserRouter([MainRoutes]);
 
-// export default Router;
+export default Router;
