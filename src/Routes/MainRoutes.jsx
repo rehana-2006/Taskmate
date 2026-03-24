@@ -1,12 +1,15 @@
-
 import { Navigate } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import MainLayout from "../MainLayout/MainLayout";
-import App from "../App";
 import Project from "../pages/Project";
 import MyTasks from "../pages/MyTasks";
 import KanbanBoard from "../pages/KanbanBoard";
 import ViewProject from "../pages/ViewProject";
+import CreateProject from "../pages/CreateProject";
+import CreateTask from "../pages/CreateTask";
+import ProtectedRoute from "../components/ProtectedRoute";
+import Team from "../pages/Team";
+import Settings from "../pages/Settings";
 
 const MainRoutes = {
   path: "/",
@@ -33,9 +36,33 @@ const MainRoutes = {
       element: <KanbanBoard />,
     },
     {
-      path:"/viewproject",
-      element:<ViewProject/>,
-    }
+      path: "/viewproject",
+      element: <ViewProject />,
+    },
+    {
+      path: "/create-project",
+      element: (
+        <ProtectedRoute allowedRoles={["project_manager"]}>
+          <CreateProject />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/create-task",
+      element: (
+        <ProtectedRoute allowedRoles={["project_manager"]}>
+          <CreateTask />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/team",
+      element: <Team />,
+    },
+    {
+      path: "/settings",
+      element: <Settings />,
+    },
   ],
 };
 

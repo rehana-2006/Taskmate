@@ -1,10 +1,13 @@
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function ViewProject() {
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
+  const { user } = useAuth();
+  const isPM = user?.role === "project_manager";
 
   if (!data) {
     return (
@@ -34,6 +37,7 @@ function ViewProject() {
           </div>
         </div>
         <div className="header-actions">
+          {isPM && <button className="action-btn" onClick={() => navigate("/create-task")}>+ Add Task</button>}
           <button className="action-btn secondary">Edit Details</button>
           <button className="action-btn primary" onClick={() => navigate("/board")}>
             Open Kanban Board

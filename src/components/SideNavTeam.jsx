@@ -10,7 +10,7 @@ function SideNavTeam() {
           <li><Link to="/dashboard">Dashboard</Link></li>
           <li><Link to="/projects">Projects</Link></li>
           <li><Link to="/mytasks">My Tasks</Link></li>
-          <li>Settings</li>
+          <li><Link to="/settings">Settings</Link></li>
         </ul>
       </nav>
     </aside>

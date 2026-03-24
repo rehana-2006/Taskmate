@@ -1,9 +1,12 @@
 import React from "react";
 import ProjectCard from "../components/ProjectCard";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Project() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const isPM = user?.role === "project_manager";
 
   const projects = [
     { id: 1, title: 'TaskMate AI', key: 'TMAI', manager: 'John Doe', status: 'Active', description: 'Advanced task management with AI suggestions.' },
@@ -19,9 +22,11 @@ function Project() {
           <h1>Projects</h1>
           <p>Manage and track all your active projects in one place.</p>
         </div>
-        <button className="create-btn" onClick={() => navigate("/createproject")}>
-          + Create Project
-        </button>
+        {isPM && (
+          <button className="create-btn" onClick={() => navigate("/create-project")}>
+            + Create Project
+          </button>
+        )}
       </header>
 
       <div className="projects-grid">
