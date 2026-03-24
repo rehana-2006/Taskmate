@@ -35,6 +35,13 @@ function Dashboard() {
 
   const displayStats = isPM ? taskDataPM : taskDataTeam;
 
+  const activities = [
+    { id: 1, text: "Sarah finished 'Navbar UI'", time: "10 mins ago" },
+    { id: 2, text: "New task assigned to Mike", time: "1 hour ago" },
+    { id: 3, text: "Project 'TMAI' reached 50%", time: "3 hours ago" },
+    { id: 4, text: "Jane joined the team", time: "Yesterday" },
+  ];
+
   return (
     <div className="dashboard-main">
       <div className="dashboard-header">
@@ -47,56 +54,77 @@ function Dashboard() {
         )}
       </div>
 
-      <div className="task-grid">
-        {displayStats.map((task, idx) => (
-          <ProjectCountCard key={idx} Data={task} />
-        ))}
-      </div>
+      <div className="dashboard-layout">
+        <div className="dashboard-main-content">
+          <div className="task-grid">
+            {displayStats.map((task, idx) => (
+              <ProjectCountCard key={idx} Data={task} />
+            ))}
+          </div>
 
-      <div className="recent-container">
-        <h2 className="recent-title">{isPM ? "Active Projects Overview" : "Recent Tasks Assigned to You"}</h2>
-        <div className="recent-table-wrapper">
-          <table className="recent-table">
-            <thead>
-              {isPM ? (
-                <tr>
-                  <th>Project Name</th>
-                  <th>Manager</th>
-                  <th>Status</th>
-                  <th>Completion</th>
-                </tr>
-              ) : (
-                <tr>
-                  <th>Task Title</th>
-                  <th>Project</th>
-                  <th>Status</th>
-                  <th>Priority</th>
-                </tr>
-              )}
-            </thead>
-            <tbody>
-              {isPM ? (
-                allProjects.map((project) => (
-                  <tr key={project.id}>
-                    <td>{project.name}</td>
-                    <td>{project.manager}</td>
-                    <td><span className={`status-${project.status.toLowerCase().replace(' ', '-')}`}>{project.status}</span></td>
-                    <td>{project.completion}%</td>
-                  </tr>
-                ))
-              ) : (
-                myCurrentTasks.map((myTask) => (
-                  <tr key={myTask.id}>
-                    <td>{myTask.title}</td>
-                    <td>{myTask.project}</td>
-                    <td>{myTask.status}</td>
-                    <td>{myTask.priority}</td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+          <div className="recent-container" style={{ marginTop: '32px' }}>
+            <h2 className="recent-title">{isPM ? "Active Projects Overview" : "Recent Tasks Assigned to You"}</h2>
+            <div className="recent-table-wrapper">
+              <table className="recent-table">
+                <thead>
+                  {isPM ? (
+                    <tr>
+                      <th>Project Name</th>
+                      <th>Manager</th>
+                      <th>Status</th>
+                      <th>Completion</th>
+                    </tr>
+                  ) : (
+                    <tr>
+                      <th>Task Title</th>
+                      <th>Project</th>
+                      <th>Status</th>
+                      <th>Priority</th>
+                    </tr>
+                  )}
+                </thead>
+                <tbody>
+                  {isPM ? (
+                    allProjects.map((project) => (
+                      <tr key={project.id}>
+                        <td>{project.name}</td>
+                        <td>{project.manager}</td>
+                        <td><span className={`status-${project.status.toLowerCase().replace(' ', '-')}`}>{project.status}</span></td>
+                        <td>{project.completion}%</td>
+                      </tr>
+                    ))
+                  ) : (
+                    myCurrentTasks.map((myTask) => (
+                      <tr key={myTask.id}>
+                        <td>{myTask.title}</td>
+                        <td>{myTask.project}</td>
+                        <td>{myTask.status}</td>
+                        <td>{myTask.priority}</td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
+
+        {isPM && (
+          <aside className="activity-sidebar">
+            <h3>Recent Activity</h3>
+            <div className="activity-list">
+              {activities.map(activity => (
+                <div key={activity.id} className="activity-item">
+                  <span className="activity-status-dot"></span>
+                  <div className="activity-info">
+                    <p className="activity-text">{activity.text}</p>
+                    <span className="activity-time">{activity.time}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </aside>
+        )}
       </div>
     </div>
   );

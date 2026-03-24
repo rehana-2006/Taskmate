@@ -1,38 +1,51 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function Settings() {
   const { user, theme, toggleTheme, updateProfile } = useAuth();
-  const [formData, setFormData] = useState({
-    name: user?.name || "",
-    password: "",
-    confirmPassword: ""
-  });
   const [message, setMessage] = useState("");
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const ValidationSchema = Yup.object({
+    name: Yup.string().required("Username is required"),
+    password: Yup.string().min(6, "Password must be at least 6 characters"),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+  });
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    if (formData.password && formData.password !== formData.confirmPassword) {
-      setMessage("Passwords do not match!");
-      return;
-    }
-    updateProfile({ name: formData.name });
-    setMessage("Profile updated successfully!");
-    setTimeout(() => setMessage(""), 3000);
-  };
+  const formik = useFormik({
+    initialValues: {
+      name: user?.name || "",
+      password: "",
+      confirmPassword: ""
+    },
+    validationSchema: ValidationSchema,
+    onSubmit: (values) => {
+      updateProfile({ name: values.name });
+      setMessage("Profile updated successfully!");
+      setTimeout(() => setMessage(""), 3000);
+    },
+  });
 
   return (
     <div className="settings-container" style={{ maxWidth: '800px', margin: '0 auto' }}>
       <h2>Account Settings</h2>
       <div className="settings-section" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '15px', padding: '30px', marginTop: '20px' }}>
         <h3 style={{ marginBottom: '20px' }}>Profile Information</h3>
-        <form onSubmit={handleUpdate}>
+        <form onSubmit={formik.handleSubmit}>
           <div className="settings-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginBottom: '20px' }}>
             <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Username</label>
-              <input type="text" name="name" value={formData.name} onChange={handleChange} style={{ padding: '12px', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '10px', color: 'var(--text-primary)' }} />
+              <label htmlFor="name" style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Username</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.name}
+                style={{ padding: '12px', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '10px', color: 'var(--text-primary)' }}
+              />
+              {formik.touched.name && formik.errors.name && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.name}</div>}
             </div>
             <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
               <label style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Email (View Only)</label>
@@ -42,12 +55,31 @@ function Settings() {
 
           <div className="settings-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', marginBottom: '30px' }}>
             <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>New Password</label>
-              <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Leave blank to keep current" style={{ padding: '12px', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '10px', color: 'var(--text-primary)' }} />
+              <label htmlFor="password" style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>New Password</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password}
+                placeholder="Leave blank to keep current"
+                style={{ padding: '12px', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '10px', color: 'var(--text-primary)' }}
+              />
+              {formik.touched.password && formik.errors.password && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.password}</div>}
             </div>
             <div className="form-group" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Confirm New Password</label>
-              <input type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} style={{ padding: '12px', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '10px', color: 'var(--text-primary)' }} />
+              <label htmlFor="confirmPassword" style={{ color: 'var(--text-muted)', fontSize: '0.8rem' }}>Confirm New Password</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.confirmPassword}
+                style={{ padding: '12px', background: 'var(--bg-surface)', border: '1px solid var(--border-color)', borderRadius: '10px', color: 'var(--text-primary)' }}
+              />
+              {formik.touched.confirmPassword && formik.errors.confirmPassword && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.confirmPassword}</div>}
             </div>
           </div>
 
