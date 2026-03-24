@@ -2,7 +2,7 @@ import React from "react";
 
 function Navbar() {
   return (
-    <div>
+    <div className="topbar-wrapper">
       <div className="topbar">
         <input
           type="text"

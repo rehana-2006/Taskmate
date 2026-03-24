@@ -6,7 +6,6 @@ function Signup() {
       <div className="signup-card">
         <h2>Signup</h2>
         <form>
-
           <div className="form-group">
             <label>Full Name</label>
             <input type="text" placeholder="Enter your full name" />
@@ -40,7 +39,9 @@ function Signup() {
           <button type="submit" className="signup-btn">
             Sign Up
           </button>
-
+          <p className="signup-footer">
+            Already have an account? <Link to="/login">Log in</Link>
+          </p>
         </form>
       </div>
     </div>

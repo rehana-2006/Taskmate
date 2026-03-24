@@ -1,0 +1,26 @@
+import React from "react";
+
+function SideNavPm(){
+    return (
+        <div>
+            <aside className="sidebar">
+                    <h2 className="logo">TaskMate</h2>
+                    <nav>
+                      <ul>
+                        <li>
+                          <Link to="/dashboard">Dashboard</Link>
+                        </li>
+                        <li>
+                          <Link to="/projects">Projects</Link>
+                        </li>
+                        <li> <Link to="/mytasks"> My Tasks</Link></li>
+                        <li><Link to="/board">Board View</Link></li>
+                        <li>Team</li>
+                        <li>Settings</li>
+                      </ul>
+                    </nav>
+                  </aside>
+        </div>
+    )
+}
+export default SideNavPm;

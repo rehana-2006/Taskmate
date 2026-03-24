@@ -1,6 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function ProjectCard({ project }) {
+
+  const navigate=useNavigate();
+
+  const handleViewProject=()=>{
+    navigate("/viewproject",{state:project})
+  }
 
   return(
     <div className="project-card">
@@ -19,7 +26,7 @@ function ProjectCard({ project }) {
         <span>Key: {project.key}</span>
       </div>
 
-      <button className="project-btn">View Project</button>
+      <button className="project-btn" onClick={handleViewProject}>View Project</button>
 
     </div>
   )

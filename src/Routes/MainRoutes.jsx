@@ -1,3 +1,4 @@
+
 import { Navigate } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import MainLayout from "../MainLayout/MainLayout";
@@ -5,6 +6,7 @@ import App from "../App";
 import Project from "../pages/Project";
 import MyTasks from "../pages/MyTasks";
 import KanbanBoard from "../pages/KanbanBoard";
+import ViewProject from "../pages/ViewProject";
 
 const MainRoutes = {
   path: "/",
@@ -30,6 +32,10 @@ const MainRoutes = {
       path: "/board",
       element: <KanbanBoard />,
     },
+    {
+      path:"/viewproject",
+      element:<ViewProject/>,
+    }
   ],
 };
 
