@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 function Settings() {
-  const { user, theme, toggleTheme, updateProfile } = useAuth();
+  const { user, updateProfile } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const [message, setMessage] = useState("");
 
   const ValidationSchema = Yup.object({

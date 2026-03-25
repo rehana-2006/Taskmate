@@ -5,7 +5,6 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [theme, setTheme] = useState(localStorage.getItem("taskmate_theme") || "dark");
 
   useEffect(() => {
     // Simulate fetching user from local storage or API
@@ -15,18 +14,6 @@ export const AuthProvider = ({ children }) => {
     }
     setLoading(false);
   }, []);
-
-  useEffect(() => {
-    // Update theme class on document element
-    if (theme === "light") {
-      document.body.classList.add("light-theme");
-    } else {
-      document.body.classList.remove("light-theme");
-    }
-    localStorage.setItem("taskmate_theme", theme);
-  }, [theme]);
-
-  const toggleTheme = () => setTheme(prev => prev === "dark" ? "light" : "dark");
 
   const login = (userData) => {
     setUser(userData);
@@ -45,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading, theme, toggleTheme, updateProfile }}>
+    <AuthContext.Provider value={{ user, login, logout, loading, updateProfile }}>
       {!loading && children}
     </AuthContext.Provider>
   );
