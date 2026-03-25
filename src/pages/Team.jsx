@@ -6,6 +6,7 @@ function Team() {
     { id: 2, name: "Jane Smith", role: "UI Designer", email: "jane@example.com", avatar: "JS" },
     { id: 3, name: "Mike Johnson", role: "Backend Developer", email: "mike@example.com", avatar: "MJ" },
     { id: 4, name: "Sarah Williams", role: "Frontend Developer", email: "sarah@example.com", avatar: "SW" },
+    {id:5, name:"Micheal rae", role:"Tester" , email:"micheal@example.com",avatar:"MR"},
   ];
 
   return (
