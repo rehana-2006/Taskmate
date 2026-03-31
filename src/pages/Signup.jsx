@@ -11,7 +11,9 @@ function Signup() {
   const ValidationSchema = Yup.object({
     fullName: Yup.string().required("Full Name is required"),
     email: Yup.string().email("Invalid email address").required("Required"),
-    password: Yup.string().min(6, "Must be at least 6 characters").required("Required"),
+    password: Yup.string()
+      .min(6, "Must be at least 6 characters")
+      .required("Required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Required"),
@@ -29,7 +31,11 @@ function Signup() {
     validationSchema: ValidationSchema,
     onSubmit: (values) => {
       // In a real app, you'd send this to the backend
-      const userData = { email: values.email, role: values.role, name: values.fullName };
+      const userData = {
+        email: values.email,
+        role: values.role,
+        name: values.fullName,
+      };
       login(userData);
       navigate("/dashboard");
     },
@@ -53,8 +59,15 @@ function Signup() {
             />
           </div>
           {formik.touched.fullName && formik.errors.fullName ? (
-            <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.fullName}</div>
-          ) : ""}
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.fullName}
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -69,8 +82,15 @@ function Signup() {
             />
           </div>
           {formik.touched.email && formik.errors.email ? (
-            <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.email}</div>
-          ) : ""}
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.email}
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="form-group">
             <label htmlFor="password">Password</label>
@@ -85,8 +105,15 @@ function Signup() {
             />
           </div>
           {formik.touched.password && formik.errors.password ? (
-            <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.password}</div>
-          ) : ""}
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.password}
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="form-group">
             <label htmlFor="confirmPassword">Confirm Password</label>
@@ -101,8 +128,15 @@ function Signup() {
             />
           </div>
           {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-            <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.confirmPassword}</div>
-          ) : ""}
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.confirmPassword}
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="form-group">
             <label htmlFor="role">Choose your role</label>

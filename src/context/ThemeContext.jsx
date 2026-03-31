@@ -4,7 +4,9 @@ const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   // Check localStorage for saved theme or default to 'dark'
-  const [theme, setTheme] = useState(() => localStorage.getItem("taskmate_theme") || "dark");
+  const [theme, setTheme] = useState(
+    () => localStorage.getItem("taskmate_theme") || "dark",
+  );
 
   useEffect(() => {
     // Sync theme with body class for styling
@@ -16,10 +18,13 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem("taskmate_theme", theme);
   }, [theme]);
 
-  const toggleTheme = () => setTheme(prev => (prev === "dark" ? "light" : "dark"));
+  const toggleTheme = () =>
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme, isDarkMode: theme === "dark" }}>
+    <ThemeContext.Provider
+      value={{ theme, setTheme, toggleTheme, isDarkMode: theme === "dark" }}
+    >
       {children}
     </ThemeContext.Provider>
   );

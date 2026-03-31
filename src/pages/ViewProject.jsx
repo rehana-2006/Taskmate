@@ -13,7 +13,9 @@ function ViewProject() {
     return (
       <div className="error-container">
         <h2>No Project Data Found</h2>
-        <button className="back-btn" onClick={() => navigate("/projects")}>Return to Projects</button>
+        <button className="back-btn" onClick={() => navigate("/projects")}>
+          Return to Projects
+        </button>
       </div>
     );
   }
@@ -23,7 +25,8 @@ function ViewProject() {
   return (
     <div className="view-project-container">
       <nav className="breadcrumb">
-        <span onClick={() => navigate("/projects")}>Projects</span> / <span>{data.title}</span>
+        <span onClick={() => navigate("/projects")}>Projects</span> /{" "}
+        <span>{data.title}</span>
       </nav>
 
       <div className="project-view-header">
@@ -33,13 +36,25 @@ function ViewProject() {
           </button>
           <div className="title-section">
             <h1>{data.title}</h1>
-            <span className={`status-pill ${data.status?.toLowerCase()}`}>{data.status}</span>
+            <span className={`status-pill ${data.status?.toLowerCase()}`}>
+              {data.status}
+            </span>
           </div>
         </div>
         <div className="header-actions">
-          {isPM && <button className="action-btn" onClick={() => navigate("/create-task")}>+ Add Task</button>}
+          {isPM && (
+            <button
+              className="action-btn"
+              onClick={() => navigate("/create-task")}
+            >
+              + Add Task
+            </button>
+          )}
           <button className="action-btn secondary">Edit Details</button>
-          <button className="action-btn primary" onClick={() => navigate("/board")}>
+          <button
+            className="action-btn primary"
+            onClick={() => navigate("/board")}
+          >
             Open Kanban Board
           </button>
         </div>
@@ -82,8 +97,15 @@ function ViewProject() {
               <div className="progress-circle-container">
                 <div className="progress-value">50%</div>
                 <svg viewBox="0 0 36 36" className="circular-chart">
-                  <path className="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                  <path className="circle" strokeDasharray="50, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                  <path
+                    className="circle-bg"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <path
+                    className="circle"
+                    strokeDasharray="50, 100"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
                 </svg>
               </div>
             </div>

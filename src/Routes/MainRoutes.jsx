@@ -10,6 +10,7 @@ import CreateTask from "../pages/CreateTask";
 import ProtectedRoute from "../components/ProtectedRoute";
 import Team from "../pages/Team";
 import Settings from "../pages/Settings";
+import AddMember from "../pages/AddMember";
 
 const MainRoutes = {
   path: "/",
@@ -58,6 +59,10 @@ const MainRoutes = {
     {
       path: "/team",
       element: <Team />,
+    },
+    {
+      path:"/add-member",
+      element:<AddMember/>
     },
     {
       path: "/settings",

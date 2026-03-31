@@ -8,7 +8,9 @@ function CreateProject() {
 
   const ValidationSchema = Yup.object({
     title: Yup.string().required("Project title is required"),
-    key: Yup.string().required("Project key is required").max(5, "Key too long"),
+    key: Yup.string()
+      .required("Project key is required")
+      .max(5, "Key too long"),
     description: Yup.string().required("Description is required"),
     startDate: Yup.date().required("Start date is required"),
     endDate: Yup.date()
@@ -48,7 +50,14 @@ function CreateProject() {
             value={formik.values.title}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.title && formik.errors.title && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.title}</div>}
+          {formik.touched.title && formik.errors.title && (
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.title}
+            </div>
+          )}
         </div>
 
         <div className="create-form-group">
@@ -61,7 +70,14 @@ function CreateProject() {
             value={formik.values.key}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.key && formik.errors.key && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.key}</div>}
+          {formik.touched.key && formik.errors.key && (
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.key}
+            </div>
+          )}
         </div>
 
         <div className="create-form-group">
@@ -73,7 +89,14 @@ function CreateProject() {
             value={formik.values.description}
             onBlur={formik.handleBlur}
           ></textarea>
-          {formik.touched.description && formik.errors.description && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.description}</div>}
+          {formik.touched.description && formik.errors.description && (
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.description}
+            </div>
+          )}
         </div>
 
         <div className="create-form-row">
@@ -87,7 +110,14 @@ function CreateProject() {
               value={formik.values.startDate}
               onBlur={formik.handleBlur}
             />
-            {formik.touched.startDate && formik.errors.startDate && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.startDate}</div>}
+            {formik.touched.startDate && formik.errors.startDate && (
+              <div
+                className="error-text"
+                style={{ color: "#ef4444", fontSize: "0.75rem" }}
+              >
+                {formik.errors.startDate}
+              </div>
+            )}
           </div>
 
           <div className="create-form-group">
@@ -100,7 +130,14 @@ function CreateProject() {
               value={formik.values.endDate}
               onBlur={formik.handleBlur}
             />
-            {formik.touched.endDate && formik.errors.endDate && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.endDate}</div>}
+            {formik.touched.endDate && formik.errors.endDate && (
+              <div
+                className="error-text"
+                style={{ color: "#ef4444", fontSize: "0.75rem" }}
+              >
+                {formik.errors.endDate}
+              </div>
+            )}
           </div>
         </div>
 
@@ -118,7 +155,14 @@ function CreateProject() {
             <option value="medium">Medium</option>
             <option value="low">Low</option>
           </select>
-          {formik.touched.priority && formik.errors.priority && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.priority}</div>}
+          {formik.touched.priority && formik.errors.priority && (
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.priority}
+            </div>
+          )}
         </div>
 
         <button type="submit" className="create-primary-btn">

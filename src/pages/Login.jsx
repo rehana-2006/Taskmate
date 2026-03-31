@@ -20,9 +20,12 @@ function Login() {
     },
     validationSchema: ValidationSchema,
     onSubmit: (values) => {
-      // Simulate login
+
       const isPM = values.email.includes("pm");
-      const userData = { email: values.email, role: isPM ? "project_manager" : "team_member" };
+      const userData = {
+        email: values.email,
+        role: isPM ? "project_manager" : "team_member",
+      };
       login(userData);
       navigate("/dashboard");
     },
@@ -46,8 +49,19 @@ function Login() {
             />
           </div>
           {formik.errors.email && formik.touched.email ? (
-            <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem', marginBottom: '10px' }}>{formik.errors.email}</div>
-          ) : ""}
+            <div
+              className="error-text"
+              style={{
+                color: "#ef4444",
+                fontSize: "0.75rem",
+                marginBottom: "10px",
+              }}
+            >
+              {formik.errors.email}
+            </div>
+          ) : (
+            ""
+          )}
 
           <div className="form-group">
             <label htmlFor="password">Password</label>
@@ -62,8 +76,19 @@ function Login() {
             />
           </div>
           {formik.errors.password && formik.touched.password ? (
-            <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem', marginBottom: '10px' }}>{formik.errors.password}</div>
-          ) : ""}
+            <div
+              className="error-text"
+              style={{
+                color: "#ef4444",
+                fontSize: "0.75rem",
+                marginBottom: "10px",
+              }}
+            >
+              {formik.errors.password}
+            </div>
+          ) : (
+            ""
+          )}
 
           <button type="submit" className="login-btn">
             Log In
@@ -77,4 +102,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Login;

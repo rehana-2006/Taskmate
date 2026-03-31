@@ -982,7 +982,6 @@ html, body, #root {
 }
 
 /* ── Status badge ── */
-/* FIX: use a .badge span inside <td> instead of font-size:0 / ::after trick */
 .badge {
   display: inline-flex;
   align-items: center;

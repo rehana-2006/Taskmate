@@ -14,13 +14,19 @@ function SideNavPm() {
             <li>
               <Link to="/projects">Projects</Link>
             </li>
-            <li> <Link to="/mytasks"> My Tasks</Link></li>
-            <li><Link to="/team">Team</Link></li>
-            <li><Link to="/settings">Settings</Link></li>
+            <li>
+              <Link to="/mytasks"> My Tasks</Link>
+            </li>
+            <li>
+              <Link to="/team">Team</Link>
+            </li>
+            <li>
+              <Link to="/settings">Settings</Link>
+            </li>
           </ul>
         </nav>
       </aside>
     </div>
-  )
+  );
 }
 export default SideNavPm;

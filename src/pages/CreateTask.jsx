@@ -55,7 +55,14 @@ function CreateTask() {
             value={formik.values.taskName}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.taskName && formik.errors.taskName && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.taskName}</div>}
+          {formik.touched.taskName && formik.errors.taskName && (
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.taskName}
+            </div>
+          )}
         </div>
 
         <div className="create-task-row">
@@ -70,7 +77,14 @@ function CreateTask() {
               value={formik.values.projectName}
               onBlur={formik.handleBlur}
             />
-            {formik.touched.projectName && formik.errors.projectName && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.projectName}</div>}
+            {formik.touched.projectName && formik.errors.projectName && (
+              <div
+                className="error-text"
+                style={{ color: "#ef4444", fontSize: "0.75rem" }}
+              >
+                {formik.errors.projectName}
+              </div>
+            )}
           </div>
           <div className="create-task-group">
             <label htmlFor="projectKey">Project key:</label>
@@ -83,7 +97,14 @@ function CreateTask() {
               value={formik.values.projectKey}
               onBlur={formik.handleBlur}
             />
-            {formik.touched.projectKey && formik.errors.projectKey && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.projectKey}</div>}
+            {formik.touched.projectKey && formik.errors.projectKey && (
+              <div
+                className="error-text"
+                style={{ color: "#ef4444", fontSize: "0.75rem" }}
+              >
+                {formik.errors.projectKey}
+              </div>
+            )}
           </div>
         </div>
 
@@ -97,7 +118,14 @@ function CreateTask() {
             value={formik.values.description}
             onBlur={formik.handleBlur}
           ></textarea>
-          {formik.touched.description && formik.errors.description && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.description}</div>}
+          {formik.touched.description && formik.errors.description && (
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.description}
+            </div>
+          )}
         </div>
 
         <div className="create-task-row">
@@ -111,7 +139,14 @@ function CreateTask() {
               value={formik.values.startDate}
               onBlur={formik.handleBlur}
             />
-            {formik.touched.startDate && formik.errors.startDate && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.startDate}</div>}
+            {formik.touched.startDate && formik.errors.startDate && (
+              <div
+                className="error-text"
+                style={{ color: "#ef4444", fontSize: "0.75rem" }}
+              >
+                {formik.errors.startDate}
+              </div>
+            )}
           </div>
           <div className="create-task-group">
             <label htmlFor="dueDate">due date:</label>
@@ -123,7 +158,14 @@ function CreateTask() {
               value={formik.values.dueDate}
               onBlur={formik.handleBlur}
             />
-            {formik.touched.dueDate && formik.errors.dueDate && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.dueDate}</div>}
+            {formik.touched.dueDate && formik.errors.dueDate && (
+              <div
+                className="error-text"
+                style={{ color: "#ef4444", fontSize: "0.75rem" }}
+              >
+                {formik.errors.dueDate}
+              </div>
+            )}
           </div>
         </div>
 
@@ -138,7 +180,14 @@ function CreateTask() {
             value={formik.values.assignee}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.assignee && formik.errors.assignee && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.assignee}</div>}
+          {formik.touched.assignee && formik.errors.assignee && (
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.assignee}
+            </div>
+          )}
         </div>
 
         <div className="create-task-group">
@@ -154,7 +203,14 @@ function CreateTask() {
             <option value="medium">medium</option>
             <option value="low">low</option>
           </select>
-          {formik.touched.priority && formik.errors.priority && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.priority}</div>}
+          {formik.touched.priority && formik.errors.priority && (
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.priority}
+            </div>
+          )}
         </div>
 
         <div className="create-task-group">
@@ -171,10 +227,20 @@ function CreateTask() {
             <option value="Completed">completed</option>
             <option value="Pending">Pending</option>
           </select>
-          {formik.touched.status && formik.errors.status && <div className="error-text" style={{ color: '#ef4444', fontSize: '0.75rem' }}>{formik.errors.status}</div>}
+          {formik.touched.status && formik.errors.status && (
+            <div
+              className="error-text"
+              style={{ color: "#ef4444", fontSize: "0.75rem" }}
+            >
+              {formik.errors.status}
+            </div>
+          )}
         </div>
 
-        <button type="submit" className="create-primary-btn"> Create Task </button>
+        <button type="submit" className="create-primary-btn">
+          {" "}
+          Create Task{" "}
+        </button>
       </form>
     </div>
   );

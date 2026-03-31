@@ -7,10 +7,18 @@ function SideNavTeam() {
       <h2 className="logo">TaskMate</h2>
       <nav>
         <ul>
-          <li><Link to="/dashboard">Dashboard</Link></li>
-          <li><Link to="/projects">Projects</Link></li>
-          <li><Link to="/mytasks">My Tasks</Link></li>
-          <li><Link to="/settings">Settings</Link></li>
+          <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/projects">Projects</Link>
+          </li>
+          <li>
+            <Link to="/mytasks">My Tasks</Link>
+          </li>
+          <li>
+            <Link to="/settings">Settings</Link>
+          </li>
         </ul>
       </nav>
     </aside>
