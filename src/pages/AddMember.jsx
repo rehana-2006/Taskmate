@@ -2,94 +2,110 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 function AddMember() {
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const ValidationSchema = Yup.object({
-    memberName: Yup.string().required("member name is required"),
-    Role: Yup.string().required("please enter the role"),
-    Email: Yup.string()
+    fullName: Yup.string().required("Full name is required"),
+    role: Yup.string().required("Please enter the role"),
+    email: Yup.string()
       .email("Invalid email address")
-      .required("please enter the email address"),
+      .required("Please enter the email address"),
   });
 
   const formik = useFormik({
     initialValues: {
-      memberName: "",
-      Role: "",
-      Email: "",
+      fullName: "",
+      role: "",
+      email: "",
     },
     validationSchema: ValidationSchema,
-    onSubmit: (values) => {
-      console.log("member added:", values);
-      Navigate("/team");
+    onSubmit: async (values, { setSubmitting, setStatus }) => {
+      try {
+        await api.post("/team-members", values);
+        navigate("/team");
+      } catch (error) {
+
+        console.error("Add Member Error:", error.response?.data || error.message);
+        setStatus(error.response?.data?.message || "Failed to add member");
+        setSubmitting(false);
+      }
+
     },
   });
+
   return (
     <div className="create-task-container">
       <form className="create-task-card" onSubmit={formik.handleSubmit}>
         <h2 className="create-task-title">Add a new member</h2>
+        {formik.status && (
+          <div style={{ color: "#ef4444", marginBottom: "1rem", textAlign: "center" }}>
+            {formik.status}
+          </div>
+        )}
         <div className="create-task-group">
-          <label htmlFor="memberName">Enter the name:</label>
+          <label htmlFor="fullName">Full Name</label>
           <input
             type="text"
-            id="memberName"
-            name="memberName"
-            placeholder="enter the name"
+            id="fullName"
+            name="fullName"
+            placeholder="eg: Jane Smith"
             onChange={formik.handleChange}
-            value={formik.values.memberName}
+            value={formik.values.fullName}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.memberName && formik.errors.memberName && (
+          {formik.touched.fullName && formik.errors.fullName && (
             <div
               className="error-text"
               style={{ color: "#ef4444", fontSize: "0.75rem" }}
             >
-              {formik.errors.memberName}
+              {formik.errors.fullName}
             </div>
           )}
         </div>
         <div className="create-task-group">
-          <label htmlFor="Role">enter the role</label>
+          <label htmlFor="role">Role</label>
           <input
             type="text"
-            id="Role"
-            name="Role"
-            placeholder="enter thr role"
+            id="role"
+            name="role"
+            placeholder="eg: UI Designer"
             onChange={formik.handleChange}
-            value={formik.values.Role}
+            value={formik.values.role}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.Role && formik.errors.Role && (
+          {formik.touched.role && formik.errors.role && (
             <div
               className="error-text"
               style={{ color: "#ef4444", fontSize: "0.75rem" }}
             >
-              {formik.errors.Role}
+              {formik.errors.role}
             </div>
           )}
         </div>
         <div className="create-task-group">
-          <label htmlFor="Email">enter the email</label>
+          <label htmlFor="email">Email address</label>
           <input
             type="email"
-            id="Email"
-            name="Email"
-            placeholder="enter the email"
+            id="email"
+            name="email"
+            placeholder="eg: jane@example.com"
             onChange={formik.handleChange}
-            value={formik.values.Email}
+            value={formik.values.email}
             onBlur={formik.handleBlur}
           />
-          {formik.touched.Email && formik.errors.Email && (
+          {formik.touched.email && formik.errors.email && (
             <div
               className="error-text"
               style={{ color: "#ef4444", fontSize: "0.75rem" }}
             >
-              {formik.errors.Email}
+              {formik.errors.email}
             </div>
           )}
         </div>
+
         <button type="submit" className="create-primary-btn">
           Add member
         </button>

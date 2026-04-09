@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 function CreateTask() {
   const navigate = useNavigate();
+  const [projects, setProjects] = useState([]);
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [projRes, usersRes] = await Promise.all([
+          api.get("/projects"),
+          api.get("/team-members")
+        ]);
+
+        setProjects(projRes.data);
+        setUsers(usersRes.data);
+      } catch (err) {
+        console.error("Error fetching data for task creation:", err);
+      }
+    };
+    fetchData();
+  }, []);
 
   const ValidationSchema = Yup.object({
     taskName: Yup.string().required("Task name is required"),
@@ -33,16 +53,34 @@ function CreateTask() {
       status: "To-do",
     },
     validationSchema: ValidationSchema,
-    onSubmit: (values) => {
-      console.log("Task Created:", values);
-      navigate("/board");
+    onSubmit: async (values, { setSubmitting, setStatus }) => {
+      try {
+        await api.post("/tasks", values);
+        navigate("/board");
+      } catch (error) {
+        setStatus(error.response?.data?.message || "Failed to create task");
+        setSubmitting(false);
+      }
     },
   });
+
+  const handleProjectChange = (e) => {
+    const selectedProj = projects.find(p => p.title === e.target.value);
+    formik.setFieldValue("projectName", e.target.value);
+    formik.setFieldValue("projectKey", selectedProj ? selectedProj.key : "");
+  };
+
 
   return (
     <div className="create-task-container">
       <form className="create-task-card" onSubmit={formik.handleSubmit}>
         <h2 className="create-task-title">Create New Task</h2>
+        {formik.status && (
+          <div style={{ color: "#ef4444", marginBottom: "1rem", textAlign: "center" }}>
+            {formik.status}
+          </div>
+        )}
+
 
         <div className="create-task-group">
           <label htmlFor="taskName">Task name:</label>
@@ -67,16 +105,19 @@ function CreateTask() {
 
         <div className="create-task-row">
           <div className="create-task-group">
-            <label htmlFor="projectName">Project Name:</label>
-            <input
-              type="text"
+            <label htmlFor="projectName">Select Project:</label>
+            <select
               id="projectName"
               name="projectName"
-              placeholder="Eg: web development"
-              onChange={formik.handleChange}
+              onChange={handleProjectChange}
               value={formik.values.projectName}
               onBlur={formik.handleBlur}
-            />
+            >
+              <option value="">-- Choose Project --</option>
+              {projects.map(p => (
+                <option key={p.id} value={p.title}>{p.title} ({p.key})</option>
+              ))}
+            </select>
             {formik.touched.projectName && formik.errors.projectName && (
               <div
                 className="error-text"
@@ -92,19 +133,10 @@ function CreateTask() {
               type="text"
               id="projectKey"
               name="projectKey"
-              placeholder="Eg:WD"
-              onChange={formik.handleChange}
+              readOnly
               value={formik.values.projectKey}
-              onBlur={formik.handleBlur}
+              style={{ background: "#f3f4f6", cursor: "not-allowed" }}
             />
-            {formik.touched.projectKey && formik.errors.projectKey && (
-              <div
-                className="error-text"
-                style={{ color: "#ef4444", fontSize: "0.75rem" }}
-              >
-                {formik.errors.projectKey}
-              </div>
-            )}
           </div>
         </div>
 
@@ -127,6 +159,7 @@ function CreateTask() {
             </div>
           )}
         </div>
+
 
         <div className="create-task-row">
           <div className="create-task-group">
@@ -171,15 +204,18 @@ function CreateTask() {
 
         <div className="create-task-group">
           <label htmlFor="assignee">Assignee:</label>
-          <input
-            type="text"
+          <select
             id="assignee"
             name="assignee"
-            placeholder="Eg:John"
             onChange={formik.handleChange}
             value={formik.values.assignee}
             onBlur={formik.handleBlur}
-          />
+          >
+            <option value="">-- Select Member --</option>
+            {users.map(u => (
+              <option key={u.id} value={u.fullName}>{u.fullName}</option>
+            ))}
+          </select>
           {formik.touched.assignee && formik.errors.assignee && (
             <div
               className="error-text"
@@ -189,6 +225,7 @@ function CreateTask() {
             </div>
           )}
         </div>
+
 
         <div className="create-task-group">
           <label htmlFor="priority">Priority</label>

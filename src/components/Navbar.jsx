@@ -23,8 +23,9 @@ function Navbar() {
         >
           <div className="user-info" style={{ textAlign: "right" }}>
             <p style={{ fontSize: "0.85rem", fontWeight: 700, margin: 0 }}>
-              {user.name }
+              {user.fullName }
             </p>
+
             <p
               style={{
                 fontSize: "0.7rem",

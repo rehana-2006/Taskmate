@@ -3,14 +3,15 @@ import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import api from "../services/api";
 
 function Settings() {
-  const { user, updateProfile } = useAuth();
+  const { user, setUser } = useAuth(); // Use setUser directly for simplicity
   const { theme, toggleTheme } = useTheme();
   const [message, setMessage] = useState("");
 
   const ValidationSchema = Yup.object({
-    name: Yup.string().required("Username is required"),
+    fullName: Yup.string().required("Full name is required"),
     password: Yup.string().min(6, "Password must be at least 6 characters"),
     confirmPassword: Yup.string().oneOf(
       [Yup.ref("password"), null],
@@ -20,17 +21,29 @@ function Settings() {
 
   const formik = useFormik({
     initialValues: {
-      name: user?.name || "",
+      fullName: user?.fullName || "",
       password: "",
       confirmPassword: "",
     },
     validationSchema: ValidationSchema,
-    onSubmit: (values) => {
-      updateProfile({ name: values.name });
-      setMessage("Profile updated successfully!");
-      setTimeout(() => setMessage(""), 3000);
+    onSubmit: async (values) => {
+      try {
+        const response = await api.patch("/team-members/profile", {
+          fullName: values.fullName,
+          email: user.email,
+        });
+
+        const updatedUser = response.data;
+        setUser(updatedUser);
+        localStorage.setItem("taskmate_user", JSON.stringify(updatedUser));
+        setMessage("Profile updated successfully!");
+        setTimeout(() => setMessage(""), 3000);
+      } catch (error) {
+        setMessage(error.response?.data?.message || "Update failed");
+      }
     },
   });
+
 
   return (
     <div
@@ -59,23 +72,19 @@ function Settings() {
               marginBottom: "20px",
             }}
           >
-            <div
-              className="form-group"
-              style={{ display: "flex", flexDirection: "column", gap: "8px" }}
-            >
               <label
-                htmlFor="name"
+                htmlFor="fullName"
                 style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}
               >
-                Username
+                Full Name
               </label>
               <input
                 type="text"
-                id="name"
-                name="name"
+                id="fullName"
+                name="fullName"
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.name}
+                value={formik.values.fullName}
                 style={{
                   padding: "12px",
                   background: "var(--bg-surface)",
@@ -84,15 +93,15 @@ function Settings() {
                   color: "var(--text-primary)",
                 }}
               />
-              {formik.touched.name && formik.errors.name && (
+              {formik.touched.fullName && formik.errors.fullName && (
                 <div
                   className="error-text"
                   style={{ color: "#ef4444", fontSize: "0.75rem" }}
                 >
-                  {formik.errors.name}
+                  {formik.errors.fullName}
                 </div>
               )}
-            </div>
+
             <div
               className="form-group"
               style={{ display: "flex", flexDirection: "column", gap: "8px" }}

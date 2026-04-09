@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 function Signup() {
-  const { login } = useAuth();
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const ValidationSchema = Yup.object({
@@ -29,23 +29,41 @@ function Signup() {
       role: "team_member",
     },
     validationSchema: ValidationSchema,
-    onSubmit: (values) => {
-      // In a real app, you'd send this to the backend
-      const userData = {
-        email: values.email,
-        role: values.role,
-        name: values.fullName,
-      };
-      login(userData);
-      navigate("/dashboard");
+    onSubmit: async (values, { setSubmitting, setStatus }) => {
+      try {
+        await register(values);
+        navigate("/dashboard");
+      } catch (error) {
+        setStatus(error);
+        setSubmitting(false);
+      }
     },
   });
+
 
   return (
     <div className="signup-container">
       <div className="signup-card">
         <h2>Signup</h2>
         <form onSubmit={formik.handleSubmit}>
+          {formik.status && (
+            <div
+              className="error-text"
+              style={{
+                color: "#ef4444",
+                fontSize: "0.875rem",
+                textAlign: "center",
+                marginBottom: "1rem",
+                padding: "0.5rem",
+                backgroundColor: "#fef2f2",
+                borderRadius: "4px",
+                border: "1px solid #fecaca",
+              }}
+            >
+              {formik.status}
+            </div>
+          )}
+
           <div className="form-group">
             <label htmlFor="fullName">Full Name</label>
             <input

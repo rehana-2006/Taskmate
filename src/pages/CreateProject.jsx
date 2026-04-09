@@ -2,9 +2,14 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
+
 
 function CreateProject() {
   const navigate = useNavigate();
+  const { user } = useAuth();
+
 
   const ValidationSchema = Yup.object({
     title: Yup.string().required("Project title is required"),
@@ -29,9 +34,15 @@ function CreateProject() {
       priority: "",
     },
     validationSchema: ValidationSchema,
-    onSubmit: (values) => {
-      console.log("Project Created:", values);
-      navigate("/projects");
+    onSubmit: async (values, { setSubmitting, setStatus }) => {
+      try {
+        await api.post("/projects", { ...values, manager: user?.fullName });
+        navigate("/projects");
+      } catch (error) {
+
+        setStatus(error.response?.data?.message || "Failed to create project");
+        setSubmitting(false);
+      }
     },
   });
 
@@ -39,6 +50,12 @@ function CreateProject() {
     <div className="create-form-container">
       <form className="create-form-card" onSubmit={formik.handleSubmit}>
         <h2 className="create-form-title">Create New Project</h2>
+        {formik.status && (
+          <div style={{ color: "#ef4444", marginBottom: "1rem", textAlign: "center" }}>
+            {formik.status}
+          </div>
+        )}
+
 
         <div className="create-form-group">
           <label htmlFor="title">Project Title</label>
@@ -138,11 +155,24 @@ function CreateProject() {
                 {formik.errors.endDate}
               </div>
             )}
-          </div>
+        </div>
+        </div>
+
+
+        <div className="create-form-group">
+          <label htmlFor="manager">Project Manager</label>
+          <input
+            type="text"
+            id="manager"
+            value={user?.fullName || ""}
+            readOnly
+            style={{ background: "#f3f4f6", cursor: "not-allowed", color: "#6b7280" }}
+          />
         </div>
 
         <div className="create-form-group">
           <label htmlFor="priority">Priority</label>
+
           <select
             id="priority"
             name="priority"

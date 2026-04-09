@@ -1,79 +1,82 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ProjectCountCard from "../components/ProjectCountCard";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import api from "../services/api";
 
 function Dashboard() {
   const { user } = useAuth();
+  const [projects, setProjects] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
   const isPM = user?.role === "project_manager";
 
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const [projectsRes, tasksRes, usersRes] = await Promise.all([
+          api.get("/projects"),
+          api.get("/tasks"),
+          api.get("/team-members"),
+        ]);
+
+        setProjects(projectsRes.data);
+        setTasks(tasksRes.data);
+        setUsers(usersRes.data);
+      } catch (error) {
+        console.error("Error fetching dashboard data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
+
+  const myCurrentTasks = isPM 
+    ? tasks 
+    : tasks.filter(t => t.assignee === user?.fullName || t.assignee === user?.email);
+
+
   const taskDataTeam = [
-    { id: 1, number: 5, name: "Active Tasks" },
-    { id: 2, number: 8, name: "Assigned to me" },
-    { id: 3, number: 12, name: "Completed" },
-    { id: 4, number: 2, name: "Pending" },
+    { id: 1, number: tasks.filter(t => t.status === "In progress").length, name: "Active Tasks" },
+    { id: 2, number: myCurrentTasks.length, name: "Assigned to me" },
+    { id: 3, number: tasks.filter(t => t.status === "Completed").length, name: "Completed" },
+    { id: 4, number: tasks.filter(t => t.status === "Pending").length, name: "Pending" },
   ];
 
   const taskDataPM = [
-    { id: 1, number: 3, name: "Active Projects" },
-    { id: 2, number: 24, name: "Total Tasks" },
-    { id: 3, number: 8, name: "Team Members" },
-    { id: 4, number: 5, name: "Delayed" },
+    { id: 1, number: projects.length, name: "Total Projects" },
+    { id: 2, number: tasks.length, name: "Total Tasks" },
+    { id: 3, number: users.length, name: "Team Members" },
+    { id: 4, number: tasks.filter(t => (t.status === "Delayed" || t.status === "Pending")).length, name: "Needs Attention" },
   ];
 
-  const myCurrentTasks = [
-    {
-      id: 1,
-      title: "Database Migration",
-      project: "PMS System",
-      status: "In Progress",
-      priority: "High",
-    },
-    {
-      id: 2,
-      title: "Logo Design Concepts",
-      project: "PM Studio Branding",
-      status: "Pending",
-      priority: "Medium",
-    },
-    {
-      id: 3,
-      title: "API Documentation",
-      project: "TaskMate AI",
-      status: "In Progress",
-      priority: "Low",
-    },
-  ];
+  const allProjects = projects.map(p => ({
+    id: p.id,
+    name: p.title,
+    status: p.status || "Active",
+    completion: 0, // In a real app, calculate this based on tasks for this project
+  }));
 
-  const allProjects = [
-    {
-      id: 1,
-      name: "TaskMate AI",
-      status: "In Progress",
-      completion: 45,
-    },
-    {
-      id: 2,
-      name: "PMS System",
-      status: "In Progress",
-      completion: 70,
-    },
-    {
-      id: 3,
-      name: "Branding Project",
-      status: "Completed",
-      completion: 100,
-    },
-  ];
 
   const displayStats = isPM ? taskDataPM : taskDataTeam;
 
+  // Generate dynamic activities from tasks and projects
   const activities = [
-    { id: 1, text: "Sarah finished 'Navbar UI'", time: "10 mins ago" },
-    { id: 2, text: "New task assigned to Mike", time: "1 hour ago" },
-    { id: 3, text: "Project 'TMAI' reached 50%", time: "3 hours ago" },
-    { id: 4, text: "Jane joined the team", time: "Yesterday" },
+    ...tasks.slice(0, 3).map(t => ({
+      id: `t-${t.id}`,
+      text: `Task '${t.taskName}' was created`,
+      time: new Date(t.createdAt).toLocaleDateString() === new Date().toLocaleDateString() ? "Today" : "Recently"
+    })),
+    ...projects.slice(0, 1).map(p => ({
+      id: `p-${p.id}`,
+      text: `New project '${p.title}' initiated`,
+      time: "Recently"
+    }))
   ];
+
 
   return (
     <div className="dashboard-main">
@@ -91,86 +94,91 @@ function Dashboard() {
         )}
       </div>
 
-      <div className="dashboard-layout">
-        <div className="dashboard-main-content">
-          <div className="task-grid">
-            {displayStats.map((task, idx) => (
-              <ProjectCountCard key={idx} Data={task} />
-            ))}
-          </div>
-
-          <div className="recent-container" style={{ marginTop: "32px" }}>
-            <h2 className="recent-title">
-              {isPM
-                ? "Active Projects Overview"
-                : "Recent Tasks Assigned to You"}
-            </h2>
-            <div className="recent-table-wrapper">
-              <table className="recent-table">
-                <thead>
-                  {isPM ? (
-                    <tr>
-                      <th>Project Name</th>
-                      <th>Status</th>
-                      <th>Completion</th>
-                    </tr>
-                  ) : (
-                    <tr>
-                      <th>Task Title</th>
-                      <th>Project</th>
-                      <th>Status</th>
-                      <th>Priority</th>
-                    </tr>
-                  )}
-                </thead>
-                <tbody>
-                  {isPM
-                    ? allProjects.map((project) => (
-                        <tr key={project.id}>
-                          <td>{project.name}</td>
-                          <td>
-                            <span
-                              className={`status-${project.status.toLowerCase().replace(" ", "-")}`}
-                            >
-                              {project.status}
-                            </span>
-                          </td>
-                          <td>{project.completion}%</td>
-                        </tr>
-                      ))
-                    : myCurrentTasks.map((myTask) => (
-                        <tr key={myTask.id}>
-                          <td>{myTask.title}</td>
-                          <td>{myTask.project}</td>
-                          <td>{myTask.status}</td>
-                          <td>{myTask.priority}</td>
-                        </tr>
-                      ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        {isPM && (
-          <aside className="activity-sidebar">
-            <h3>Recent Activity</h3>
-            <div className="activity-list">
-              {activities.map((activity) => (
-                <div key={activity.id} className="activity-item">
-                  <span className="activity-status-dot"></span>
-                  <div className="activity-info">
-                    <p className="activity-text">{activity.text}</p>
-                    <span className="activity-time">{activity.time}</span>
-                  </div>
-                </div>
+      {loading ? (
+        <p>Loading dashboard data...</p>
+      ) : (
+        <div className="dashboard-layout">
+          <div className="dashboard-main-content">
+            <div className="task-grid">
+              {displayStats.map((task, idx) => (
+                <ProjectCountCard key={idx} Data={task} />
               ))}
             </div>
-          </aside>
-        )}
-      </div>
+
+            <div className="recent-container" style={{ marginTop: "32px" }}>
+              <h2 className="recent-title">
+                {isPM
+                  ? "Active Projects Overview"
+                  : "Recent Tasks Assigned to You"}
+              </h2>
+              <div className="recent-table-wrapper">
+                <table className="recent-table">
+                  <thead>
+                    {isPM ? (
+                      <tr>
+                        <th>Project Name</th>
+                        <th>Status</th>
+                        <th>Completion</th>
+                      </tr>
+                    ) : (
+                      <tr>
+                        <th>Task Title</th>
+                        <th>Project</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                      </tr>
+                    )}
+                  </thead>
+                  <tbody>
+                    {isPM
+                      ? allProjects.map((project) => (
+                          <tr key={project.id}>
+                            <td>{project.name}</td>
+                            <td>
+                              <span
+                                className={`status-${project.status.toLowerCase().replace(" ", "-")}`}
+                              >
+                                {project.status}
+                              </span>
+                            </td>
+                            <td>{project.completion}%</td>
+                          </tr>
+                        ))
+                      : myCurrentTasks.map((myTask) => (
+                          <tr key={myTask.id}>
+                            <td>{myTask.title}</td>
+                            <td>{myTask.project}</td>
+                            <td>{myTask.status}</td>
+                            <td>{myTask.priority}</td>
+                          </tr>
+                        ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          {isPM && (
+            <aside className="activity-sidebar">
+              <h3>Recent Activity</h3>
+              <div className="activity-list">
+                {activities.map((activity) => (
+                  <div key={activity.id} className="activity-item">
+                    <span className="activity-status-dot"></span>
+                    <div className="activity-info">
+                      <p className="activity-text">{activity.text}</p>
+                      <span className="activity-time">{activity.time}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </aside>
+          )}
+        </div>
+      )}
     </div>
   );
 }
+
 
 export default Dashboard;

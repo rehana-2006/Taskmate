@@ -5,8 +5,9 @@ function ProjectCard({ project }) {
   const navigate = useNavigate();
 
   const handleViewProject = () => {
-    navigate("/viewproject", { state: project });
+    navigate(`/viewproject/${project.key}`);
   };
+
 
   return (
     <div className="project-card">

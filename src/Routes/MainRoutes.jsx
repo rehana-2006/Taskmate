@@ -37,9 +37,10 @@ const MainRoutes = {
       element: <KanbanBoard />,
     },
     {
-      path: "/viewproject",
+      path: "/viewproject/:key",
       element: <ViewProject />,
     },
+
     {
       path: "/create-project",
       element: (
